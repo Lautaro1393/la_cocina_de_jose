@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/styles.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>La Cocina de Jose</title>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
+</head>
+</head>
+
+<body>
+
+    <header>
+        <h1>La Cocina de Jose</h1>
+    </header>
+    <!-- <nav class="navbar">
+<div class="logo">LOGO</div>
+<ul class="nav-links">
+<li><a href="#">Home</a></li>
+<li class="dropdown">
+<a href="#">Products</a>
+<ul class="dropdown-content">
+<li><a href="#">Category 1</a></li>
+<li><a href="#">Category 2</a></li>
+</ul>
+</li>
+<li><a href="#">About</a></li>
+<li><a href="#">Contact</a></li>
+</ul>
+<div class="burger">
+<span class="material-symbols-rounded menu-icon">menu</span>
+<span class="material-symbols-outlined close-icon" style="display: none;">cancel</span>
+</div>
+</nav> -->
+    <nav class="navbar">
+        <div class="logo">LOGO</div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li class="dropdown">
+                <a href="#">Products</a>
+                <ul class="dropdown-content">
+                    <li><a href="#">Category 1</a></li>
+                    <li><a href="#">Category 2</a></li>
+                </ul>
+            </li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><button id="authButton">Login / Register</button></li>
+        </ul>
+        <div class="burger">
+            <span class="material-symbols-rounded menu-icon">menu</span>
+            <span class="material-symbols-outlined close-icon" style="display: none;">cancel</span>
+        </div>
+    </nav>
+    <main>
+        <ul class="product-list">
+            <li class="product-card">
+                <img src="./images/canape.jpeg" alt="Canapé variado">
+                <h2>Canapé</h2>
+                <p>Precio: $1000</p>
+            </li>
+            <li class="product-card">
+                <img src="./images/empanadas.jpeg" alt="Empanadas surtidas">
+                <h2>Empanadas</h2>
+                <p>Precio: $1000</p>
+            </li>
+            <li class="product-card">
+                <img src="/images/sanguchitos_de_miga.jpeg" alt="Sándwiches de miga variados">
+                <h2>Sándwiches</h2>
+                <p>Precio: $1000</p>
+            </li>
+            <li class="product-card">
+                <img src="/images/mini_pizza_catering.jpeg" alt="Mini pizzas variadas">
+                <h2>Pizzetas</h2>
+                <p>Precio: $1000</p>
+            </li>
+        </ul>
+        <section id="pedidos" class="pedidos-section">
+            <h2>Pedidos</h2>
+            <div class="pedido-form">
+                <input type="text" id="nombre" placeholder="Nombre">
+                <input type="text" id="apellido" placeholder="Apellido">
+                <input type="date" id="fecha" placeholder="Elegir Fecha">
+                <select id="menu-select">
+                    <option value="">Seleccione un menú</option>
+                    <option value="Canapé">Canapé</option>
+                    <option value="Empanadas">Empanadas</option>
+                    <option value="Sándwiches">Sándwiches</option>
+                    <option value="Pizzetas">Pizzetas</option>
+                </select>
+                <input type="number" id="cantidad" min="1" value="1" placeholder="Cantidad">
+                <button id="agregar-pedido">+</button>
+            </div>
+            <ul id="lista-pedidos"></ul>
+            <p id="total-pedido">Total: $0</p>
+            <button id="enviar-whatsapp" class="whatsapp-btn">Enviar por WhatsApp</button>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Catálogo de Productos. Todos los derechos reservados.</p>
+    </footer>
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="authOptions">
+                <button id="showLoginBtn">Iniciar Sesión</button>
+                <button id="showRegisterBtn">Registrarse</button>
+            </div>
+
+            <form id="loginForm" class="hidden">
+                <h2>Iniciar Sesión</h2>
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <input type="password" id="loginPassword" placeholder="Contraseña" required>
+                <button type="submit">Iniciar Sesión</button>
+            </form>
+
+            <form id="registerForm" class="hidden">
+                <h2>Registrarse</h2>
+                <input type="text" id="registerName" placeholder="Nombre" required>
+                <input type="email" id="registerEmail" placeholder="Email" required>
+                <input type="password" id="registerPassword" placeholder="Contraseña" required>
+                <button type="submit">Registrarse</button>
+            </form>
+            <button id="logoutBtn" class="hidden">Cerrar Sesión</button>
+        </div>
+    </div>
+
+    <!-- Admin Panel (inicialmente oculto) -->
+    <div id="adminPanel" class="admin-panel hidden">
+        <h2>Panel de Administración</h2>
+        <form id="productForm">
+            <input type="hidden" id="productId" name="id">
+            <input type="text" id="productName" name="name" placeholder="Nombre del producto" required>
+            <textarea id="productDescription" name="description" placeholder="Descripción del producto" required></textarea>
+            <input type="number" id="productPrice" name="price" placeholder="Precio" step="0.01" required>
+            <input type="text" id="productCategory" name="category" placeholder="Categoría" required>
+            <input type="file" id="productImage" name="image" accept="image/*">
+            <button type="submit">Guardar Producto</button>
+        </form>
+        <div id="productList" class="product-list"></div>
+    </div>
+
+    <!-- Añade esto al final de tu archivo index.html, justo antes de los scripts -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="productModalTitle">Gestionar Producto</h2>
+            <form id="productForm" enctype="multipart/form-data">
+                <input type="hidden" id="productId">
+                <div>
+                    <label for="productName">Nombre:</label>
+                    <input type="text" id="productName" required>
+                </div>
+                <div>
+                    <label for="productDescription">Descripción:</label>
+                    <textarea id="productDescription" required></textarea>
+                </div>
+                <div>
+                    <label for="productPrice">Precio:</label>
+                    <input type="number" id="productPrice" step="0.01" required>
+                </div>
+                <div>
+                    <label for="productCategory">Categoría:</label>
+                    <input type="text" id="productCategory" required>
+                </div>
+                <div>
+                    <label for="productImage">Imagen:</label>
+                    <input type="file" id="productImage" accept="image/*">
+                </div>
+                <button type="submit">Guardar</button>
+            </form>
+        </div>
+    </div>
+    <script src="auth.js"></script>
+    <script src="admin.js"></script>
+    <script src="/JS/script.js"></script>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="/JS/App.js" type="text/babel"></script>
+</body>
+
+</html>
