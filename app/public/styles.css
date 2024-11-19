@@ -1,0 +1,112 @@
+:root {
+    /* Colores principales */
+    --marrón-oscuro: #3E2C2Eff;
+    /* Van Dyke */
+    --marrón-tierra: #3C2118ff;
+    /* Bistre */
+    --óxido-rojo: #633229ff;
+    /* Caput Mortuum */
+    --umbra-natural: #96693Cff;
+    /* Raw Umber */
+    --bronce-antiguo: #D78B42ff;
+    /* Bronze */
+
+    /* Colores secundarios */
+    --gris-pizarra: #73728Aff;
+    /* Slate Gray */
+    --azul-noche: #192435ff;
+    /* Oxford Blue */
+    --puesta-de-sol: #F4D19Cff;
+    /* Sunset */
+    --azul-cielo: #28A6DAff;
+    /* Picton Blue */
+    --azul-profundo: #2077ABff;
+    /* Honolulu Blue */
+    --puesta-de-sol2: rgba(245, 226, 198, 0.103);
+}
+
+
+
+body {
+    background-color: var(--marrón-oscuro);
+    color: var(--bronce-antiguo);
+    text-shadow: 2px 2px 5px #333;
+    background-size: cover;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100svh;
+    font-size: large;
+    background-image: url(/pixlr-image-generator-0fd0a72e-deb4-43b0-a1f3-1117ab0907af.png);
+
+}
+
+.form-container {
+    
+    width: 500px;
+    background-color: rgba(19, 71, 69, 0.2);
+    border: var(--puesta-de-sol2) solid 5px;
+    backdrop-filter: blur(12px);
+    /* background-color: transparent; */
+    color: var(--carne-asada);
+    border-radius: 12px;
+    padding: 30px;
+    margin: 20px;
+}
+
+form {
+    display: flex;
+    
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+form+p,
+form p {
+    text-align: center;
+}
+
+input,
+button {
+    border-radius: 8px;
+    border: unset;
+    padding: 15px 30px;
+    font-size: large;
+}
+
+button {
+    background-color: var(--azul-noche);
+    color: var(--puesta-de-sol);
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+button:hover {
+    background-color: var(--azul-profundo);
+    color: var(--puesta-de-sol);
+    transition: background-color 0.3s, color 0.3s;
+  }
+.error {
+    color: red;
+}
+
+.invisible_visible {
+    display: none;
+}
+
+.sr-only {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+
+}
