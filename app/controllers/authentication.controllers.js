@@ -22,29 +22,29 @@ async function login(req, res) {
     }
     const usuarioAControlar = usuarios.find(usuario => usuario.user === user);
     if (!usuarioAControlar) {
-        return  res.status(400).send({ status: "Error", message: "Error durante el login" });
+        return res.status(400).send({ status: "Error", message: "Error durante el login" });
     }
     const loginCorrecto = await bcryptjs.compare(password, usuarioAControlar.password);
 
     console.log(loginCorrecto);
 
-    if(!loginCorrecto){
-      return res.status(400).send({status: "Error", message: "Error durante el login"})
+    if (!loginCorrecto) {
+        return res.status(400).send({ status: "Error", message: "Error durante el login" })
     }
     const token = jsonwebtoken.sign(
-        {user: usuarioAControlar.user},
+        { user: usuarioAControlar.user },
         process.env.JWT_SECRET,
-        {expiresIn:process.env.JWT_EXPIRATION}
+        { expiresIn: process.env.JWT_EXPIRATION }
     );
     const cookieOption = {
-        expires: new Date(Date.now()+ process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000 ),
+        expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
         // convierto en dias , guarde un dia que es el valor que esta en la variable de entorno 
-        path: "/" 
+        path: "/"
     }
 
-res.cookie("jwt", token, cookieOption); // generamos la cookie
-res.send({status: "OK", message: "Usuario logueado", redirect:"/admin"});
-// return res.json({ redirect: "/admin" });
+    res.cookie("jwt", token, cookieOption); // generamos la cookie
+    res.send({ status: "OK", message: "Usuario logueado", redirect: "/admin" });
+    // return res.json({ redirect: "/admin" });
 }
 
 async function register(req, res) {
