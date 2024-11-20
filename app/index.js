@@ -7,6 +7,8 @@ import { fileURLToPath } from "url";
 
 import { methods as pedidosController } from "./controllers/pedidos.controllers.js";
 import { methods as productosController } from "./controllers/productos.controllers.js";
+import { methods as detallePedidoController } from "./controllers/detalle_pedido.controllers.js";
+
 // FIX PARA EL DIRNAME
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -85,3 +87,11 @@ app.get("/api/pedidos/:id", pedidosController.obtenerPedidoPorId);
 app.post("/api/pedidos", pedidosController.crearPedido);
 app.put("/api/pedidos/:id", pedidosController.actualizarPedido);
 app.delete("/api/pedidos/:id", pedidosController.eliminarPedido);
+
+
+// Rutas de detalles de pedidos
+app.get("/api/detalle_pedido", detallePedidoController.obtenerDetallesPedido);
+app.get("/api/detalle_pedido/:id", detallePedidoController.obtenerDetallePedidoPorId);
+app.post("/api/detalle_pedido", detallePedidoController.crearDetallePedido);
+app.put("/api/detalle_pedido/:id", detallePedidoController.actualizarDetallePedido);
+app.delete("/api/detalle_pedido/:id", detallePedidoController.eliminarDetallePedido);
