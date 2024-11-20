@@ -1,81 +1,88 @@
+import bcryptjs from 'bcryptjs';
+import connection from '../index.js';
+import jwt from 'jsonwebtoken';
 
-import bcryptjs from "bcryptjs";
-import jsonwebtoken from "jsonwebtoken";
-import dotenv from "dotenv";
-dotenv.config();
-
-export const usuarios = [{
-    user: "admin2",
-    email: "admin2@gmail.com",
-    password: "$2a$05$9hoQSuvQiKjwzXqozyqarucapIfE3bygPC1i/Vposy6ndQKGMkXeS"
-}]
-
-
-async function login(req, res) {
-    console.log(req.body);
-    const user = req.body.user;
-    const password = req.body.password;
-
-    if (!user || !password) {
-        // console.log("Ingreso");
-        return res.status(400).send({ status: "Error", message: "Los campos estan incompletos" });
-    }
-    const usuarioAControlar = usuarios.find(usuario => usuario.user === user);
-    if (!usuarioAControlar) {
-        return res.status(400).send({ status: "Error", message: "Error durante el login" });
-    }
-    const loginCorrecto = await bcryptjs.compare(password, usuarioAControlar.password);
-
-    console.log(loginCorrecto);
-
-    if (!loginCorrecto) {
-        return res.status(400).send({ status: "Error", message: "Error durante el login" })
-    }
-    const token = jsonwebtoken.sign(
-        { user: usuarioAControlar.user },
-        process.env.JWT_SECRET,
-        { expiresIn: process.env.JWT_EXPIRATION }
-    );
-    const cookieOption = {
-        expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
-        // convierto en dias , guarde un dia que es el valor que esta en la variable de entorno 
-        path: "/"
-    }
-
-    res.cookie("jwt", token, cookieOption); // generamos la cookie
-    res.send({ status: "OK", message: "Usuario logueado", redirect: "/admin" });
-    // return res.json({ redirect: "/admin" });
-}
-
+// Función de Register
 async function register(req, res) {
-    console.log(req.body);
-    const user = req.body.user;
-    const password = req.body.password;
-    const email = req.body.email;
-    if (!user || !password || !email) {
-        // console.log("Ingreso");
-        return res.status(400).send({ status: "Error", message: "Los campos estan incompletos" });
-    }
-    const usuarioAControlar = usuarios.find(usuario => usuario.user === user);
-    if (usuarioAControlar) {
-        return res.status(400).send({ status: "Error", message: "Este usuario ya existe" });
-    }
-    const salt = await bcryptjs.genSalt(5);
-    const hashPassword = await bcryptjs.hash(password, salt);
-    const nuevoUsuario = {
-        user, email, password: hashPassword
-    }
-    usuarios.push(nuevoUsuario);
-    console.log(usuarios);
-    return res.status(201).send({ status: "ok", message: `Usuario ${nuevoUsuario} agregado`, redirect: "/" });
+  const { user, password, email, rol } = req.body;
 
+  // Validar que se envían todos los campos requeridos
+  if (!user || !password || !email) {
+    return res.status(400).send({ status: "Error", message: "Los campos están incompletos" });
+  }
+
+  // Verificar si el usuario ya existe en la base de datos
+  connection.query('SELECT * FROM usuarios WHERE email = ?', [email], async (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send({ status: "Error", message: "Error del servidor" });
+    }
+
+    if (results.length > 0) {
+      return res.status(400).send({ status: "Error", message: "Este usuario ya existe" });
+    } else {
+      // Encriptar la contraseña
+      const salt = await bcryptjs.genSalt(10);
+      const hashedPassword = await bcryptjs.hash(password, salt);
+
+      // Determinar el rol: si no se proporciona, por defecto será 'comun'
+      const userRole = rol ? rol : 'comun';
+
+      // Insertar el nuevo usuario en la base de datos
+      connection.query(
+        'INSERT INTO usuarios (nombre, email, contraseña, rol) VALUES (?, ?, ?, ?)',
+        [user, email, hashedPassword, userRole],
+        (err, results) => {
+          if (err) {
+            console.error(err);
+            return res.status(500).send({ status: "Error", message: "Error al registrar usuario" });
+          }
+
+          return res.status(201).send({ status: "ok", message: `Usuario ${user} agregado correctamente`, redirect: "/" });
+        }
+      );
+    }
+  });
 }
 
+// Función de Login
+async function login(req, res) {
+  const { identifier, password } = req.body;
 
+  if (!identifier  || !password) {
+    return res.status(400).send({ status: "Error", message: "Los campos están incompletos" });
+  }
 
+  // Buscar el usuario en la base de datos
+  connection.query('SELECT * FROM usuarios WHERE email = ? OR nombre = ?', [identifier, identifier], async (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send({ status: "Error", message: "Error del servidor" });
+    }
 
+    if (results.length === 0) {
+      return res.status(400).send({ status: "Error", message: "El usuario no existe" });
+    }
+
+    const usuario = results[0];
+    const isPasswordCorrect = await bcryptjs.compare(password, usuario.contraseña);
+
+    if (!isPasswordCorrect) {
+      return res.status(400).send({ status: "Error", message: "Contraseña incorrecta" });
+    }
+
+    // Crear el token JWT
+    const token = jwt.sign({ id: usuario.id, rol: usuario.rol }, 'clave_secreta', { expiresIn: '1h' });
+
+    // Enviar el token como cookie
+    res.cookie('jwt', token, { httpOnly: true, maxAge: 3600000 }); // 1 hora de duración
+     // Redirección basada en el rol del usuario
+     const redirectUrl = usuario.rol === 'admin' ? '/admin' : '/perfil';
+     return res.status(200).send({ status: "ok", message: "Login exitoso", redirect: redirectUrl });
+  });
+}
 
 export const methods = {
-    login,
-    register
-}
+  register,
+  login
+};

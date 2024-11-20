@@ -1,42 +1,79 @@
-import jsonwebtoken from "jsonwebtoken";
-import dotenv from "dotenv";
-dotenv.config(); // Agregar esto
-import { usuarios } from "../controllers/authentication.controllers.js";
+import jwt from 'jsonwebtoken';
 
-
-
-function soloAdmin(req, res, next) {
-    const logueado = revisarCookie(req);
-    if (logueado) return next();
-    return res.redirect("/");
-
-}
-
+// Middleware para permitir acceso solo a usuarios no autenticados (ej. páginas como login, registro, home)
 function soloPublico(req, res, next) {
-    const logueado = revisarCookie(req);
-    if (!logueado) return next();
-    return res.redirect("/");
-}
-function revisarCookie(req) {
+  const token = req.cookies.jwt;
+  if (token) {
     try {
-        const cookieJWT = req.headers.cookie.split("; ").find(cookie => cookie.startsWith("jwt=")).slice(4);
-        const decodificada = jsonwebtoken.verify(cookieJWT, process.env.JWT_SECRET);
-        console.log(decodificada);
-        const usuarioAControlar = usuarios.find(usuario => usuario.user === decodificada.user);
-        console.log(usuarioAControlar);
-        if (!usuarioAControlar) {
-            return false
-        }
-        return true;
-
-
+      const decoded = jwt.verify(token, 'clave_secreta');
+      // Redirigir dependiendo del rol del usuario
+      if (decoded.rol === 'admin') {
+        return res.redirect("/admin"); // Si es admin, redirigir al panel de administración
+      } else {
+        return res.redirect("/perfil"); // Si es un usuario común, redirigir a su perfil
+      }
+    } catch (err) {
+      // Si el token no es válido, ignoramos y permitimos acceso a la página pública
     }
-    catch {
-        return false;
-    }
+  }
+  next();
 }
 
+// Middleware para permitir acceso a usuarios autenticados (común o admin)
+function soloAutenticado(req, res, next) {
+  const token = req.cookies.jwt;
+  if (!token) {
+    return res.redirect("/login"); // Si no está autenticado, redirigir al login
+  }
+  try {
+    const decoded = jwt.verify(token, 'clave_secreta');
+    req.user = decoded; // Añadir la información del usuario decodificado a la solicitud
+    next();
+  } catch (err) {
+    res.status(400).send("Token inválido.");
+  }
+}
+
+// Middleware para permitir solo acceso a usuarios con rol 'admin'
+function soloAdmin(req, res, next) {
+  const token = req.cookies.jwt;
+  if (!token) {
+    return res.redirect("/login"); // Si no tiene token, redirigir al login
+  }
+  try {
+    const decoded = jwt.verify(token, 'clave_secreta');
+    if (decoded.rol !== 'admin') {
+      return res.status(403).send("Acceso denegado. No tienes permisos suficientes.");
+    }
+    req.user = decoded; // Añadir la información del usuario decodificado a la solicitud
+    next();
+  } catch (err) {
+    res.status(400).send("Token inválido.");
+  }
+}
+
+// Middleware para permitir solo acceso a usuarios con rol 'comun'
+function soloUsuarios(req, res, next) {
+  const token = req.cookies.jwt;
+  if (!token) {
+    return res.redirect("/login"); // Si no tiene token, redirigir al login
+  }
+  try {
+    const decoded = jwt.verify(token, 'clave_secreta');
+    if (decoded.rol !== 'comun') {
+      return res.status(403).send("Acceso denegado. No tienes permisos suficientes.");
+    }
+    req.user = decoded; // Añadir la información del usuario decodificado a la solicitud
+    next();
+  } catch (err) {
+    res.status(400).send("Token inválido.");
+  }
+}
+
+// Exportar los métodos
 export const methods = {
-    soloAdmin,
-    soloPublico
-}
+  soloPublico,
+  soloAutenticado,
+  soloAdmin,
+  soloUsuarios,
+};

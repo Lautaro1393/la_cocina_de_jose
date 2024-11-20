@@ -1,32 +1,42 @@
-
-
-
-const mensajeError = document.querySelector(".error")
-
-document.getElementById("login-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const user = e.target.children.user.value;
-    const password = e.target.children.password.value;
-
-
-
-    // comunicacion con el bakcend
-
-    const res = await fetch("http://localhost:3000/api/login", {
+document.getElementById("login-form").addEventListener("submit", async function(event) {
+    event.preventDefault();
+  
+    // Obtener los valores ingresados en el formulario de login
+    const identifier = document.getElementById("user").value; // Nombre de usuario (o email en el futuro)
+    const password = document.getElementById("password").value;
+  
+    // Verificar que ambos campos tengan datos
+    if (!identifier || !password) {
+      alert("Por favor, complete todos los campos");
+      return;
+    }
+  
+    try {
+      // Enviar la solicitud POST al backend
+      const response = await fetch("http://localhost:3000/api/login", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
-
-            user, password
+          identifier,
+          password
         })
-    });
-    if (!res.ok) return mensajeError.classList.toggle("invisible_visible", false);
-    const resJson = await res.json();
-    if (resJson.redirect) {
-        window.location.href = resJson.redirect;
+      });
+  
+      // Verificar la respuesta del servidor
+      if (response.ok) {
+        const data = await response.json();
+        alert(data.message); // Mostrar mensaje de login exitoso
+        window.location.href = data.redirect; // Redirigir a la página correspondiente
+      } else {
+        // Mostrar mensaje de error en caso de fallar el login
+        const errorData = await response.json();
+        alert(errorData.message);
+      }
+    } catch (error) {
+      console.error("Error al intentar iniciar sesión:", error);
+      alert("Error al intentar iniciar sesión, por favor intente nuevamente");
     }
-})
-
-
+  });
+  
