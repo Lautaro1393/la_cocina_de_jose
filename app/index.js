@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import path from 'path';
 import { fileURLToPath } from "url";
 
+import { methods as pedidosController } from "./controllers/pedidos.controllers.js";
 import { methods as productosController } from "./controllers/productos.controllers.js";
 // FIX PARA EL DIRNAME
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -76,3 +77,11 @@ app.get("/api/productos/:id", productosController.obtenerProductoPorId);
 app.post("/api/productos", authorization.soloAdmin, productosController.crearProducto);
 app.put("/api/productos/:id", authorization.soloAdmin, productosController.actualizarProducto);
 app.delete("/api/productos/:id", authorization.soloAdmin, productosController.eliminarProducto);
+
+
+// Rutas de pedidos
+app.get("/api/pedidos", pedidosController.obtenerPedidos);
+app.get("/api/pedidos/:id", pedidosController.obtenerPedidoPorId);
+app.post("/api/pedidos", pedidosController.crearPedido);
+app.put("/api/pedidos/:id", pedidosController.actualizarPedido);
+app.delete("/api/pedidos/:id", pedidosController.eliminarPedido);
