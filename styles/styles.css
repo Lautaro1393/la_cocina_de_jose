@@ -1,236 +1,191 @@
-/* Variables globales */
+/* Definimos las variables CSS con los mismos colores y estilos que ya tienes */
 :root {
-  --bg-color: #1a1a1a;
-  --card-bg-color: rgba(51, 51, 51, 0.937);
-  --text-color: #ffffff;
-  --secondary-text-color: #b0b0b0;
-  --shadow-color: rgba(238, 238, 238, 0.4);
+  --primary-color: #3498db;
+  --secondary-color: #2ecc71;
+  --background-color: #f0f0f0;
+  --text-color: #333;
+  --header-background: #ffffff;
+  --cta-color: #e74c3c;
+  --button-hover-color: #2980b9;
+  --font-family: 'Roboto', sans-serif;
 }
 
-/* Estilos generales */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
+/* Aplicamos el estilo al body y elementos generales */
 body {
-  font-family: 'Poppins', sans-serif;
-  background-color: var(--bg-color);
+  margin: 0;
+  font-family: var(--font-family);
   color: var(--text-color);
-  line-height: 1.6;
+  background-color: var(--background-color);
 }
 
-/* Estilos del encabezado y pie de página */
-header, footer {
-  text-align: center;
-  padding: 20px;
+header {
+  background-color: var(--header-background);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilos de la barra de navegación */
-.navbar {
+nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: var(--card-bg-color);
+}
+
+nav a {
   color: var(--text-color);
-  position: relative;
-}
-
-.nav-links {
-  display: flex;
-  list-style: none;
-}
-
-.nav-links li {
-  margin-left: 20px;
-}
-
-.nav-links li a {
   text-decoration: none;
-  color: var(--text-color);
-  font-size: 18px;
+  margin: 0 1rem;
+  transition: color 0.3s;
 }
 
-.dropdown {
+nav a:hover {
+  color: var(--primary-color);
+}
+
+/* Hero Section */
+.hero {
+  background-image: url('../images/hero-image.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
   position: relative;
 }
 
-.dropdown-content {
-  display: none;
+.hero::after {
+  content: '';
   position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.hero-content {
+  position: relative;
   z-index: 1;
 }
 
-.dropdown:hover .dropdown-content {
-  display: block;
+.hero h1 {
+  font-size: 3rem;
 }
 
-.burger {
-  display: none;
+.hero p {
+  font-size: 1.2rem;
+  margin: 1rem 0;
+}
+
+.hero .cta-button {
+  background-color: var(--cta-color);
+  color: #fff;
+  border: none;
+  padding: 1rem 2rem;
   cursor: pointer;
-  z-index: 1000;
+  transition: background-color 0.3s;
 }
 
-.logo {
-  font-size: 24px;
-  font-weight: bold;
-  margin-right: 20px;
+.hero .cta-button:hover {
+  background-color: var(--button-hover-color);
 }
 
-/* Estilos de la lista de productos */
-.product-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  list-style-type: none;
+/* Servicios/Productos Destacados */
+.destacados {
+  padding: 4rem 2rem;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  background-color: #ffffff;
 }
 
-.product-card {
-  flex: 1 1 calc(25% - 20px);
-  min-width: 200px;
-  background-color: var(--card-bg-color);
-  border-radius: 10px;
-  border: var(--shadow-color) 1px solid; 
-  padding: 20px;
-  transition: all 0.3s ease;
+.destacado-item {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: center;
+  padding: 1rem;
+  transition: transform 0.3s;
 }
 
-.product-card:hover {
+.destacado-item:hover {
   transform: translateY(-5px);
-  box-shadow: 0 5px 15px var(--shadow-color);
 }
 
-.product-card img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 10px 10px 0 0;
+/* Testimonios */
+.testimonios {
+  background-color: var(--secondary-color);
+  padding: 4rem 2rem;
+  color: #fff;
+  text-align: center;
 }
 
-.product-card h2 {
-  font-size: 18px;
-  margin-top: 10px;
+.testimonio-item {
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
-.product-card p {
-  font-size: 16px;
-  color: var(--secondary-text-color);
-  margin-top: 5px;
+/* Contacto Rápido */
+.contacto {
+  padding: 4rem 2rem;
+  text-align: center;
+  background-color: var(--background-color);
 }
 
-/* Estilos de la sección de pedidos */
-.pedidos-section {
-  background-color: var(--card-bg-color);
-  border-radius: 10px;
-  padding: 20px;
-  margin-top: 20px;
-  border: var(--shadow-color) 1px solid; 
-}
-
-.pedido-form {
+.contacto form {
+  max-width: 500px;
+  margin: 0 auto;
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 20px;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-#menu-select, #cantidad, #nombre, #apellido, #fecha {
-  padding: 5px;
+.contacto input, .contacto textarea {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
   border-radius: 5px;
-  border: 1px solid var(--secondary-text-color);
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  flex: 1;
-  min-width: 120px;
+  font-size: 1rem;
 }
 
-#agregar-pedido {
-  background-color: #4CAF50;
-  color: white;
+.contacto button {
+  background-color: var(--cta-color);
+  color: #fff;
   border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
+  padding: 1rem;
   cursor: pointer;
-  flex: 0 0 auto;
+  transition: background-color 0.3s;
 }
 
-.whatsapp-btn {
-  background-color: #25D366;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 20px;
+.contacto button:hover {
+  background-color: var(--button-hover-color);
 }
 
-/* Estilos para dispositivos móviles */
+/* Responsivo */
 @media (max-width: 768px) {
-  .nav-links {
-      display: none;
-      flex-direction: column;
-      position: fixed;
-      top: 0;
-      height: 100vh;
-      left: 0;
-      width: 100%;
-      background-color: #1a1a1a;
-      padding: 60px 20px 20px;
-      transition: all 0.3s ease-in-out;
-      z-index: 999;
+  nav {
+    flex-direction: column;
   }
-
-  .nav-links.active {
-      display: flex;
+  .hero h1 {
+    font-size: 2.5rem;
   }
-
-  .nav-links li {
-      margin: 10px 0;
-  }
-
-  .burger {
-      display: block;
-  }
-
-  .close-icon {
-      display: none;
-  }
-
-  .burger.active .menu-icon {
-      display: none;
-  }
-
-  .burger.active .close-icon {
-      display: inline-block;
+  .destacados {
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 480px) {
-  .pedido-form {
-      flex-direction: column;
+  nav {
+    flex-direction: column;
   }
-
-  #menu-select, #cantidad, #nombre, #apellido, #fecha, #agregar-pedido {
-      width: 100%;
+  .hero h1 {
+    font-size: 2rem;
   }
-}
-
-/* Estilos de los iconos */
-.material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24
-}
-
-span {
-  font-size: 24px;
-  color:#EA3323;
-  cursor: pointer;
-}
+  .cta-button {
+    padding: 0.8rem 1.5rem;
+  }
+} 

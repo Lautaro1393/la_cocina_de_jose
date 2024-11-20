@@ -3,81 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles/styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <title>PAGINA DE RESTAURANTE</title>
+    <title>La Cocina de José - Inicio</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Header con Menú de Navegación -->
     <header>
-        <h1>Nuestros Productos</h1>
-    </header>
-    <nav class="navbar">
-        <div class="logo">LOGO</div>
-        <ul class="nav-links">
-          <li><a href="#">Home</a></li>
-          <li class="dropdown">
-            <a href="#">Products</a>
-            <ul class="dropdown-content">
-              <li><a href="#">Category 1</a></li>
-              <li><a href="#">Category 2</a></li>
-            </ul>
-          </li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-        <div class="burger">
-          <span class="material-symbols-rounded menu-icon">menu</span>
-          <span class="material-symbols-outlined close-icon">cancel</span>
-        </div>
-    </nav>
-    <main>
-        <ul class="product-list">
-            <li class="product-card">
-                <img src="/vercel/images/canape.jpeg" alt="Canapé variado">
-                <h2>Canapé</h2>
-                <p>Precio: $1000</p>
-            </li>
-            <li class="product-card">
-                <img src="/vercel/images/empanadas.jpeg" alt="Empanadas surtidas">
-                <h2>Empanadas</h2>
-                <p>Precio: $1000</p>
-            </li>
-            <li class="product-card">
-                <img src="/vercel/images/sanguchitos_de_miga.jpeg" alt="Sándwiches de miga variados">
-                <h2>Sándwiches</h2>
-                <p>Precio: $1000</p>
-            </li>
-            <li class="product-card">
-                <img src="/vercel/images/mini_pizza_catering.jpeg" alt="Mini pizzas variadas">
-                <h2>Pizzetas</h2>
-                <p>Precio: $1000</p>
-            </li>
-        </ul>
-        <section id="pedidos" class="pedidos-section">
-            <h2>Pedidos</h2>
-            <div class="pedido-form">
-                <input type="text" id="nombre" placeholder="Nombre">
-                <input type="text" id="apellido" placeholder="Apellido">
-                <input type="date" id="fecha" placeholder="Elegir Fecha">
-                <select id="menu-select">
-                    <option value="">Seleccione un menú</option>
-                    <option value="Canapé">Canapé</option>
-                    <option value="Empanadas">Empanadas</option>
-                    <option value="Sándwiches">Sándwiches</option>
-                    <option value="Pizzetas">Pizzetas</option>
-                </select>
-                <input type="number" id="cantidad" min="1" value="1" placeholder="Cantidad">
-                <button id="agregar-pedido">+</button>
+        <nav class="nav-bar">
+            <div class="logo">
+                <h1>La Cocina de José</h1>
             </div>
-            <ul id="lista-pedidos"></ul>
-            <p id="total-pedido">Total: $0</p>
-            <button id="enviar-whatsapp" class="whatsapp-btn">Enviar por WhatsApp</button>
-        </section>
-    </main>
+            <ul class="nav-links">
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#testimonios">Testimonios</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <div class="nav-toggle" id="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Bienvenidos a La Cocina de José</h2>
+            <p>Disfruta de nuestras delicias preparadas con amor y dedicación.</p>
+            <a href="#productos" class="btn-cta">Ver Productos</a>
+        </div>
+        <div class="hero-carousel">
+            <!-- Carrusel de Imágenes -->
+            <img src="images/hero1.jpg" alt="Imagen destacada de La Cocina de José">
+            <img src="images/hero2.jpg" alt="Deliciosos platos de comida casera">
+        </div>
+    </section>
+
+    <!-- Servicios/Productos Destacados -->
+    <section id="servicios" class="featured-services">
+        <h2>Nuestros Servicios</h2>
+        <div class="services-grid">
+            <div class="service-item">
+                <img src="images/service1.jpg" alt="Servicio de Catering">
+                <h3>Catering para Eventos</h3>
+                <p>Organizamos eventos y brindamos el mejor servicio de catering para que tus celebraciones sean inolvidables.</p>
+                <a href="#" class="btn-link">Conoce más</a>
+            </div>
+            <div class="service-item">
+                <img src="images/service2.jpg" alt="Comidas por Encargo">
+                <h3>Comidas por Encargo</h3>
+                <p>Preparamos deliciosos platos por encargo, ideales para tus reuniones familiares o cualquier ocasión especial.</p>
+                <a href="#" class="btn-link">Conoce más</a>
+            </div>
+            <div class="service-item">
+                <img src="images/service3.jpg" alt="Talleres de Cocina">
+                <h3>Talleres de Cocina</h3>
+                <p>Aprende a cocinar con nuestros talleres presenciales donde compartimos los secretos de nuestra cocina.</p>
+                <a href="#" class="btn-link">Conoce más</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section id="testimonios" class="testimonials">
+        <h2>Testimonios de Nuestros Clientes</h2>
+        <div class="testimonials-carousel">
+            <div class="testimonial">
+                <p>"La mejor comida casera que he probado, siempre me siento como en casa."</p>
+                <h4>- Ana Pérez</h4>
+            </div>
+            <div class="testimonial">
+                <p>"El servicio de catering fue impecable, todo estuvo delicioso y a tiempo."</p>
+                <h4>- Carlos López</h4>
+            </div>
+            <div class="testimonial">
+                <p>"Aprender a cocinar con José fue una experiencia única, muy recomendado."</p>
+                <h4>- Marta Fernández</h4>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto Rápido -->
+    <section id="contacto" class="quick-contact">
+        <h2>Contacto</h2>
+        <form action="#" method="POST" class="contact-form">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="telefono">Teléfono:</label>
+            <input type="tel" id="telefono" name="telefono">
+
+            <label for="mensaje">Mensaje:</label>
+            <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+
+            <button type="submit" class="btn-submit">Enviar Mensaje</button>
+        </form>
+    </section>
+
     <footer>
-        <p>&copy; 2023 Catálogo de Productos. Todos los derechos reservados.</p>
+        <p>&copy; 2024 La Cocina de José. Todos los derechos reservados.</p>
     </footer>
-    <script src="script.js"></script>
+
+    <script src="scripts/script.js"></script>
 </body>
 </html>

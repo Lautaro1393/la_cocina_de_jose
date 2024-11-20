@@ -3,66 +3,424 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles/styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <title>La Cocina de José</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --color-primary: #3E2C2E;
+            --color-secondary: #D78B42;
+            --color-accent: #96693C;
+            --color-background: #192435;
+            --color-text: #F4D19C;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--color-text);
+            background-color: var(--color-primary);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--color-background);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 1rem;
+        }
+
+        .nav-links a {
+            color: var(--color-text);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-secondary);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        #hero {
+            background-image: url('https://source.unsplash.com/random/1600x900/?restaurant,food');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--color-secondary);
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--color-accent);
+        }
+
+        /* Services Section */
+        #servicios {
+            padding: 4rem 0;
+            background-color: var(--color-background);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-item {
+            background-color: var(--color-primary);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .service-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .service-content {
+            padding: 1.5rem;
+        }
+
+        /* Products Section */
+        #productos {
+            padding: 4rem 0;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-item {
+            background-color: var(--color-background);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .product-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-content {
+            padding: 1rem;
+        }
+
+        /* Testimonials Section */
+        #testimonios {
+            padding: 4rem 0;
+            background-color: var(--color-background);
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-item {
+            background-color: var(--color-primary);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        /* Contact Section */
+        #contacto {
+            padding: 4rem 0;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--color-accent);
+            border-radius: 5px;
+            background-color: var(--color-background);
+            color: var(--color-text);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--color-background);
+            color: var(--color-text);
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background-color: var(--color-background);
+                padding: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 0.5rem 0;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Bienvenidos a La Cocina de José</h1>
-    </header>
-    <nav class="navbar">
-        <div class="logo">LOGO</div>
-        <ul class="nav-links">
-          <li><a href="/">Home</a></li>
-          <li><a href="#products">Productos</a></li>
-          <li><a href="#about">Nosotros</a></li>
-          <li><a href="#contact">Contacto</a></li>
-        </ul>
-        <div class="burger">
-          <span class="material-symbols-rounded menu-icon">menu</span>
-          <span class="material-symbols-outlined close-icon">cancel</span>
-        </div>
-    </nav>
-    <main>
-        <section id="products">
-            <h2>Nuestros Productos</h2>
-            <ul class="product-list">
-                <li class="product-card">
-                    <img src="/images/canape.jpeg" alt="Canapé variado">
-                    <h3>Canapé</h3>
-                    <p>Precio: $1000</p>
-                </li>
-                <li class="product-card">
-                    <img src="/images/empanadas.jpeg" alt="Empanadas surtidas">
-                    <h3>Empanadas</h3>
-                    <p>Precio: $1000</p>
-                </li>
-                <li class="product-card">
-                    <img src="/images/sanguchitos_de_miga.jpeg" alt="Sándwiches de miga variados">
-                    <h3>Sándwiches</h3>
-                    <p>Precio: $1000</p>
-                </li>
-                <li class="product-card">
-                    <img src="/images/mini_pizza_catering.jpeg" alt="Mini pizzas variadas">
-                    <h3>Pizzetas</h3>
-                    <p>Precio: $1000</p>
-                </li>
+        <nav class="container">
+            <div class="logo">La Cocina de José</div>
+            <ul class="nav-links">
+                <li><a href="#hero">Inicio</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#testimonios">Testimonios</a></li>
+                <li><a href="#contacto">Contacto</a></li>
             </ul>
-        </section>
-        <section id="about">
-            <h2>Nosotros</h2>
-            <p>En La Cocina de José ofrecemos la mejor calidad en comidas caseras, siempre frescas y hechas con amor para nuestros clientes.</p>
-        </section>
-        <section id="contact">
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <section id="hero">
+        <div class="hero-content">
+            <h1>Bienvenidos a La Cocina de José</h1>
+            <p>Disfruta de nuestras delicias preparadas con amor y dedicación</p>
+            <a href="#productos" class="btn">Ver Productos</a>
+        </div>
+    </section>
+
+    <section id="servicios">
+        <div class="container">
+            <h2>Nuestros Servicios</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <img src="https://source.unsplash.com/random/400x300/?catering" alt="Catering para Eventos">
+                    <div class="service-content">
+                        <h3>Catering para Eventos</h3>
+                        <p>Organizamos eventos y brindamos el mejor servicio de catering.</p>
+                    </div>
+                </div>
+                <div class="service-item">
+                    <img src="https://source.unsplash.com/random/400x300/?meal-prep" alt="Comidas por Encargo">
+                    <div class="service-content">
+                        <h3>Comidas por Encargo</h3>
+                        <p>Preparamos deliciosos platos por encargo para tus reuniones.</p>
+                    </div>
+                </div>
+                <div class="service-item">
+                    <img src="https://source.unsplash.com/random/400x300/?cooking-class" alt="Talleres de Cocina">
+                    <div class="service-content">
+                        <h3>Talleres de Cocina</h3>
+                        <p>Aprende a cocinar con nuestros talleres presenciales.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="productos">
+        <div class="container">
+            <h2>Nuestros Productos</h2>
+            <div class="products-grid" id="products-container">
+                <!-- Products will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonios">
+        <div class="container">
+            <h2>Testimonios</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-item">
+                    <p>"La mejor comida casera que he probado, siempre me siento como en casa."</p>
+                    <h4>- Ana Pérez</h4>
+                </div>
+                <div class="testimonial-item">
+                    <p>"El servicio de catering fue impecable, todo estuvo delicioso y a tiempo."</p>
+                    <h4>- Carlos López</h4>
+                </div>
+                <div class="testimonial-item">
+                    <p>"Aprender a cocinar con José fue una experiencia única, muy recomendado."</p>
+                    <h4>- Marta Fernández</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto">
+        <div class="container">
             <h2>Contacto</h2>
-            <p>Para pedidos o consultas, contáctanos al <strong>+54 9 11 1234 5678</strong> o envíanos un mensaje en nuestras redes sociales.</p>
-        </section>
-    </main>
+            <form class="contact-form" id="contact-form">
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Correo Electrónico:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="tel" id="telefono" name="telefono">
+                </div>
+                <div class="form-group">
+                    <label for="mensaje">Mensaje:</label>
+                    <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn">Enviar Mensaje</button>
+            </form>
+        </div>
+    </section>
+
     <footer>
-        <p>&copy; 2024 La Cocina de José. Todos los derechos reservados.</p>
+        <div class="container">
+            <p>&copy; 2024 La Cocina de José. Todos los derechos reservados.</p>
+        </div>
     </footer>
-    <script src="/public/script.js"></script>
+
+    <script>
+        // Toggle mobile menu
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Fetch products from API
+        fetch('/api/productos')
+            .then(response => response.json())
+            .then(data => {
+                const productsContainer = document.getElementById('products-container');
+                data.data.forEach(product => {
+                    const productElement = document.createElement('div');
+                    productElement.className = 'product-item';
+                    productElement.innerHTML = `
+                        <img src="${product.imagen || 'https://source.unsplash.com/random/400x300/?food'}" alt="${product.nombre}">
+                        <div class="product-content">
+                            <h3>${product.nombre}</h3>
+                            <p>${product.descripcion}</p>
+                            <p class="price">$${product.precio}</p>
+                        </div>
+                    `;
+                    productsContainer.appendChild(productElement);
+                });
+            })
+            .catch(error => console.error('Error fetching products:', error));
+
+        // Handle form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Here you would typically send the form data to your server
+            alert('Gracias por su mensaje. Nos pondremos en contacto pronto.');
+            this.reset();
+        });
+    </script>
 </body>
 </html>
